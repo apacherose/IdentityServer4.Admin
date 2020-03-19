@@ -83,12 +83,12 @@ namespace Skoruba.IdentityServer4.Admin.Helpers
             using (var scope = serviceProvider.GetRequiredService<IServiceScopeFactory>().CreateScope())
             {
                 var context = scope.ServiceProvider.GetRequiredService<TIdentityServerDbContext>();
-                var userManager = scope.ServiceProvider.GetRequiredService<UserManager<TUser>>();
-                var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<TRole>>();
+                //var userManager = scope.ServiceProvider.GetRequiredService<UserManager<TUser>>();
+                //var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<TRole>>();
                 var rootConfiguration = scope.ServiceProvider.GetRequiredService<IRootConfiguration>();
 
                 await EnsureSeedIdentityServerData(context, rootConfiguration.IdentityServerDataConfiguration);
-                await EnsureSeedIdentityData(userManager, roleManager, rootConfiguration.IdentityDataConfiguration);
+                //await EnsureSeedIdentityData(userManager, roleManager, rootConfiguration.IdentityDataConfiguration);
             }
         }
 

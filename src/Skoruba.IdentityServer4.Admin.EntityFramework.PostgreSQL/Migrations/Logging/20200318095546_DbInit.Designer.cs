@@ -7,10 +7,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Skoruba.IdentityServer4.Admin.EntityFramework.Shared.DbContexts;
 
-namespace Skoruba.IdentityServer4.Admin.EntityFramework.PostgreSQL.Migrations.AuditLogging
+namespace Skoruba.IdentityServer4.Admin.EntityFramework.PostgreSQL.Migrations.Logging
 {
-    [DbContext(typeof(AdminAuditLogDbContext))]
-    [Migration("20191120100220_DbInit")]
+    [DbContext(typeof(AdminLogDbContext))]
+    [Migration("20200318095546_DbInit")]
     partial class DbInit
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -18,49 +18,41 @@ namespace Skoruba.IdentityServer4.Admin.EntityFramework.PostgreSQL.Migrations.Au
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn)
-                .HasAnnotation("ProductVersion", "3.0.0")
+                .HasAnnotation("ProductVersion", "3.1.0")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
-            modelBuilder.Entity("Skoruba.AuditLogging.EntityFramework.Entities.AuditLog", b =>
+            modelBuilder.Entity("Skoruba.IdentityServer4.Admin.EntityFramework.Entities.Log", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
+                        .HasColumnType("bigint")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-                    b.Property<string>("Action")
+                    b.Property<string>("Exception")
                         .HasColumnType("text");
 
-                    b.Property<string>("Category")
+                    b.Property<string>("Level")
+                        .HasColumnType("character varying(128)")
+                        .HasMaxLength(128);
+
+                    b.Property<string>("LogEvent")
                         .HasColumnType("text");
 
-                    b.Property<DateTime>("Created")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<string>("Data")
+                    b.Property<string>("Message")
                         .HasColumnType("text");
 
-                    b.Property<string>("Event")
+                    b.Property<string>("MessageTemplate")
                         .HasColumnType("text");
 
-                    b.Property<string>("Source")
+                    b.Property<string>("Properties")
                         .HasColumnType("text");
 
-                    b.Property<string>("SubjectAdditionalData")
-                        .HasColumnType("text");
-
-                    b.Property<string>("SubjectIdentifier")
-                        .HasColumnType("text");
-
-                    b.Property<string>("SubjectName")
-                        .HasColumnType("text");
-
-                    b.Property<string>("SubjectType")
-                        .HasColumnType("text");
+                    b.Property<DateTimeOffset>("TimeStamp")
+                        .HasColumnType("timestamp with time zone");
 
                     b.HasKey("Id");
 
-                    b.ToTable("AuditLog");
+                    b.ToTable("Log");
                 });
 #pragma warning restore 612, 618
         }

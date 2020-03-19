@@ -2,14 +2,6 @@
   "IdentityServerData": {
     "IdentityResources": [
       {
-        "Name": "roles",
-        "Enabled": true,
-        "DisplayName": "Roles",
-        "UserClaims": [
-          "role"
-        ]
-      },
-      {
         "Name": "openid",
         "Enabled": true,
         "Required": true,
@@ -29,6 +21,8 @@
           "family_name",
           "given_name",
           "middle_name",
+          "organization",
+          "access_type",
           "nickname",
           "preferred_username",
           "profile",
@@ -38,7 +32,28 @@
           "birthdate",
           "zoneinfo",
           "locale",
-          "updated_at"
+          "updated_at",
+          "role",
+          "user_identifiable"
+        ]
+      },
+      {
+        "Name": "epzeu.identity",
+        "Enabled": true,
+        "DisplayName": "EPZEU identity",
+        "Description": "EPZEU identity",
+        "UserClaims": [
+          "role",
+          "given_name",
+          "family_name"
+        ]
+      },
+      {
+        "Name": "roles",
+        "Enabled": true,
+        "DisplayName": "Roles",
+        "UserClaims": [
+          "role"
         ]
       },
       {
@@ -63,6 +78,132 @@
     ],
     "ApiResources": [
       {
+        "Name": "epzeu.cr.api",
+        "Scopes": [
+          {
+            "Name": "epzeu.cr.api"
+          }
+        ],
+        "UserClaims": [ "role", "name", "given_name", "family_name", "Subject", "cin", "login_session_id", "user_identifiable" ]
+      },
+      {
+        "Name": "epzeu.cr.api.public",
+        "Scopes": [
+          {
+            "Name": "epzeu.cr.api.public"
+          }
+        ],
+        "UserClaims": [ "role", "name", "given_name", "family_name", "Subject", "cin", "login_session_id", "user_identifiable" ],
+        "ApiSecrets": [
+          {
+            "Value": "epzeu.cr.api.public.secret"
+          }
+        ]
+      },
+      {
+        "Name": "epzeu.pr.api",
+        "Scopes": [
+          {
+            "Name": "epzeu.pr.api"
+          }
+        ],
+        "ApiSecrets": [
+          {
+            "Value": "epzeu.pr.api.secret"
+          }
+        ],
+        "UserClaims": [ "role", "name", "given_name", "family_name", "Subject", "cin", "login_session_id", "access_type" ]
+      },
+      {
+        "Name": "epzeu.api",
+        "Scopes": [
+          {
+            "Name": "epzeu.api"
+          }
+        ],
+        "UserClaims": [ "role", "name", "given_name", "family_name", "Subject", "cin", "login_session_id", "user_identifiable" ]
+      },
+      {
+        "Name": "epzeu.api.public",
+        "Scopes": [
+          {
+            "Name": "epzeu.api.public"
+          }
+        ],
+        "ApiSecrets": [
+          {
+            "Value": "epzeu.api.public.secret"
+          }
+        ],
+        "UserClaims": [ "role", "name", "given_name", "family_name", "Subject", "cin", "login_session_id" ]
+      },
+      {
+        "Name": "reau.api",
+        "Scopes": [
+          {
+            "Name": "reau.api"
+          }
+        ],
+        "UserClaims": [ "role", "name", "given_name", "family_name", "Subject", "cin", "login_session_id" ]
+      },
+      {
+        "Name": "payments.api",
+        "Scopes": [
+          {
+            "Name": "payments.api"
+          }
+        ],
+        "ApiSecrets": [
+          {
+            "Value": "payments.api.secret"
+          }
+        ],
+        "UserClaims": [ "role", "name", "given_name", "family_name", "Subject", "cin", "login_session_id" ]
+      },
+      {
+        "Name": "integration.epzeu.api",
+        "Scopes": [
+          {
+            "Name": "integration.epzeu.api"
+          }
+        ],
+        "UserClaims": [ "role", "name", "given_name", "family_name", "Subject", "cin", "login_session_id" ]
+      },
+      {
+        "Name": "egov.edelivery.service",
+        "Scopes": [
+          {
+            "Name": "egov.edelivery.service"
+          }
+        ],
+        "UserClaims": [ "Subject", "cin", "login_session_id" ]
+      },
+      {
+        "Name": "egov.edelivery.notification",
+        "Scopes": [
+          {
+            "Name": "egov.edelivery.notification"
+          }
+        ],
+        "UserClaims": [ "Subject", "cin", "login_session_id" ]
+      },
+      {
+        "Name": "jp_api",
+        "DisplayName": "JP API",
+        "Description": "OAuth2 Server Management Api",
+        "ApiSecrets": [
+          {
+            "Value": "x+M3WGX0+mH2AVrtyMrFLbAm4MG+AgtV8fdEhEZufR0="
+          }
+        ],
+        "Scopes": [
+          {
+            "Name": "jp_api.is4"
+          }
+        ],
+        "UserClaims": [ "openid", "profile", "email", "is4-rights", "username", "roles" ]
+      },
+      {
         "Name": "skoruba_identity_admin_api",
         "Scopes": [
           {
@@ -78,6 +219,211 @@
       }
     ],
     "Clients": [
+      {
+        "ClientId": "epzeu.api.client",
+        "ClientName": "epzeu.api.client",
+        "AllowedGrantTypes": [ "delegation", "client_credentials" ],
+        "AccessTokenLifetime": "120",
+        "AllowedScopes": [ "epzeu.cr.api", "integration.epzeu.api", "epzeu.pr.api", "payments.api" ],
+        "ClientClaimsPrefix": "",
+        "ClientSecrets": [
+          {
+            "Value": "epzeu.api.client.secret"
+          }
+        ]
+      },
+      {
+        "ClientId": "epzeu.cr.api.client",
+        "ClientName": "epzeu.cr.api.client",
+        "AllowedGrantTypes": [ "delegation", "client_credentials" ],
+        "AccessTokenLifetime": "120",
+        "AllowedScopes": [ "epzeu.api", "integration.epzeu.api", "payments.api", "egov.edelivery.service" ],
+        "ClientClaimsPrefix": "",
+        "ClientSecrets": [
+          {
+            "Value": "epzeu.cr.api.client.secret"
+          }
+        ]
+      },
+      {
+        "ClientId": "idsrv.client",
+        "ClientName": "idsrv.client",
+        "AllowedGrantTypes": [ "client_credentials" ],
+        "AccessTokenLifetime": "120",
+        "AllowedScopes": [ "epzeu.api" ],
+        "ClientClaimsPrefix": "",
+        "ClientSecrets": [
+          {
+            "Value": "idsrv.client"
+          }
+        ]
+      },
+      {
+        "ClientId": "epzeu.cr.ui.client",
+        "ClientName": "epzeu.cr.ui.client",
+        "AllowedGrantTypes": [ "implicit" ],
+        "RequireConsent": false,
+        "AccessTokenLifetime": 14400,
+        "AllowAccessTokensViaBrowser": true,
+        "AccessTokenType": "Reference",
+        "AllowedScopes": [ "openid", "profile", "epzeu.cr.api.public", "epzeu.api.public" ],
+        "RedirectUris": [ "https://localhost/EPZEU.CR.Web.App/Identity/SignIn", "https://localhost/EPZEU.CR.Web.App/Identity/Renew" ],
+        "PostLogoutRedirectUris": [ "https://portal.dev.epzeu.dev.local/", "https://localhost/EPZEU.CR.Web.App/SessionTimeout", "https://localhost/EPZEU.CR.Web.App/{lang}/SessionTimeout" ],
+        "AllowedCorsOrigins": [ "https://localhost" ],
+        "FrontChannelLogoutUri": "https://localhost/EPZEU.CR.Web.App/Identity/FrontChannelLogout"
+      },
+      {
+        "ClientId": "epzeu.swagger.client",
+        "ClientName": "epzeu.swagger.client",
+        "AllowedGrantTypes": [ "implicit" ],
+        "RequireConsent": false,
+        "AccessTokenLifetime": 14400,
+        "AllowAccessTokensViaBrowser": true,
+        "AllowedScopes": [ "openid", "profile", "epzeu.cr.api.public", "epzeu.api.public", "epzeu.api" ],
+        "RedirectUris": [ "http://localhost/EPZEU.Web.Api.Public/swagger/oauth2-redirect.html", "http://localhost/EPZEU.Web.Api.Private/swagger/oauth2-redirect.html" ],
+        "PostLogoutRedirectUris": [],
+        "AllowedCorsOrigins": [ "https://localhost" ]
+      },
+      {
+        "ClientId": "epzeu.pr.ui.client",
+        "ClientName": "epzeu.pr.ui.client",
+        "AllowedGrantTypes": [ "implicit" ],
+        "RequireConsent": false,
+        "AccessTokenLifetime": 120,
+        "AllowAccessTokensViaBrowser": true,
+        "AccessTokenType": "Reference",
+        "AllowedScopes": [ "openid", "profile", "epzeu.pr.api", "epzeu.api", "epzeu.api.public" ],
+        "RedirectUris": [ "https://portal.qa.epzeu.dev.local/PR/Identity/SignIn.html", "https://portal.qa.epzeu.dev.local/PR/Identity/Renew.html" ],
+        "PostLogoutRedirectUris": [ "https://portal.qa.epzeu.dev.local/", "https://portal.qa.epzeu.dev.local/PR/SessionTimeout", "https://portal.qa.epzeu.dev.local/PR/{lang}/SessionTimeout" ],
+        "AllowedCorsOrigins": [ "https://portal.qa.epzeu.dev.local" ]
+      },
+      {
+        "ClientId": "epzeu.pr.api.client",
+        "ClientName": "epzeu.pr.api.client",
+        "AllowedGrantTypes": [ "delegation" ],
+        "AccessTokenLifetime": "14400",
+        "AllowedScopes": [ "reau.api", "epzeu.api" ],
+        "ClientClaimsPrefix": "",
+        "ClientSecrets": [
+          {
+            "Value": "zKWOfi29MJXLz/0vqEJS+3nDeRee1zLLKH7sOTyrenE="
+          }
+        ]
+      },
+      {
+        "ClientId": "payments.api.client",
+        "ClientName": "payments.api.client",
+        "AllowedGrantTypes": [ "client_credentials" ],
+        "AccessTokenLifetime": "14400",
+        "AllowedScopes": [ "reau.api", "epzeu.cr.api" ],
+        "ClientClaimsPrefix": "",
+        "ClientSecrets": [
+          {
+            "Value": "Hqs6l8FoVIy4v4oeNkrw54yQevs/EBhbTAqFOB+rCqY="
+          }
+        ]
+      },
+      {
+        "ClientId": "reau.api.client",
+        "ClientName": "reau.api.client",
+        "AllowedGrantTypes": [ "client_credentials", "delegation" ],
+        "AccessTokenLifetime": "14400",
+        "AllowedScopes": [ "payments.api", "epzeu.pr.api", "epzeu.api.public", "epzeu.api" ],
+        "ClientClaimsPrefix": "",
+        "ClientSecrets": [
+          {
+            "Value": "kfqKBXXHGoVCLvgxYGzQsFcQkw5KVnQFQX0tF91RTQc="
+          }
+        ]
+      },
+      {
+        "ClientId": "reau.ui.client",
+        "ClientName": "reau.ui.client",
+        "AllowedGrantTypes": [ "implicit" ],
+        "RequireConsent": false,
+        "AccessTokenLifetime": 14400,
+        "AllowAccessTokensViaBrowser": true,
+        "AllowedScopes": [ "openid", "profile", "reau.api" ],
+        "RedirectUris": [ "https://localhost/PropertyRegister.REAU.Web.App/Identity/SignIn", "https://localhost/PropertyRegister.REAU.Web.App/Identity/Renew" ],
+        "PostLogoutRedirectUris": [ "https://localhost/PropertyRegister.REAU.Web.App/", "https://localhost/PropertyRegister.REAU.Web.App/SessionTimeout" ],
+        "AllowedCorsOrigins": [ "https://localhost" ]
+      },
+      {
+        "ClientId": "payments.ui.client",
+        "ClientName": "payments.ui.client",
+        "AllowedGrantTypes": [ "implicit" ],
+        "RequireConsent": false,
+        "AccessTokenLifetime": 14400,
+        "AllowAccessTokensViaBrowser": true,
+        "AccessTokenType": "Reference",
+        "AllowedScopes": [ "openid", "profile", "payments.api" ],
+        "RedirectUris": [ "https://localhost/Payments.Web.App/Identity/SignIn", "https://localhost/Payments.Web.App/Identity/Renew", "https://localhost/Payments.Web.App/swagger/oauth2-redirect.html" ],
+        "PostLogoutRedirectUris": [ "https://localhost/Payments.Web.App/", "https://localhost/Payments.Web.App/SessionTimeout" ],
+        "AllowedCorsOrigins": [ "https://localhost" ]
+      },
+      {
+        "ClientId": "integration.epzeu.api.client",
+        "ClientName": "integration.epzeu.api.client",
+        "AllowedGrantTypes": [ "client_credentials", "delegation", "weak_delegation" ],
+        "AccessTokenLifetime": "14400",
+        "AllowedScopes": [ "payments.api", "epzeu.cr.api", "epzeu.api" ],
+        "ClientClaimsPrefix": "",
+        "ClientSecrets": [
+          {
+            "Value": "integration.epzeu.api.client.secret"
+          }
+        ]
+      },
+      {
+        "ClientId": "egov.edelivery.service.client",
+        "ClientName": "egov.edelivery.service.client",
+        "AllowedGrantTypes": [ "client_credentials" ],
+        "AccessTokenLifetime": "14400",
+        "AllowedScopes": [ "egov.edelivery.service" ],
+        "ClientClaimsPrefix": "",
+        "ClientSecrets": [
+          {
+            "Value": "egov.edelivery.service.client.secret"
+          }
+        ]
+      },
+      {
+        "ClientId": "egov.edelivery.notification.client",
+        "ClientName": "egov.edelivery.notification.client",
+        "AllowedGrantTypes": [ "client_credentials" ],
+        "AccessTokenLifetime": "14400",
+        "AllowedScopes": [ "egov.edelivery.notification" ],
+        "ClientClaimsPrefix": "",
+        "ClientSecrets": [
+          {
+            "Value": "egov.edelivery.notification.client.secret"
+          }
+        ]
+      },
+      {
+        "ClientId": "IS4-Admin",
+        "ClientName": "IS4-Admin",
+        "AllowedGrantTypes": [ "code" ],
+        "AllowAccessTokensViaBrowser": false,
+        "RequireConsent": true,
+        "RequirePkce": true,
+        "AllowPlainTextPkce": false,
+        "RequireClientSecret": false,
+        "RedirectUris": [
+          "http://localhost:4300/login-callback",
+          "http://localhost:4300/silent-refresh.html"
+        ],
+        "AllowedCorsOrigins": [ "http://localhost:4300" ],
+        "LogoUri": "https://jpproject.azurewebsites.net/sso/images/brand/logo.png",
+        "PostLogoutRedirectUris": [ "http://localhost:4300" ],
+        "AllowedScopes": [
+          "openid",
+          "profile",
+          "email",
+          "jp_api.is4",
+          "roles"
+        ]
+      },
       {
         "ClientId": "skoruba_identity_admin",
         "ClientName": "skoruba_identity_admin",
